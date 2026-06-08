@@ -5,3 +5,5 @@ sequences_4aa.csv
 sequences_5aa.csv
 sequences_6aa.csv
 sequences_all.csv
+sequences_all.zip
+.gitignore
