@@ -28,9 +28,7 @@ A C D E F G H I K L M N P Q R S T V W Y
 - **Reproducibility**: fix random seeds, version data outputs.
 - **Scientific reasoning**: explain why an implementation choice was made, not just what it does.
 
-## Running the Notebook
-
-Open `protein-generation.ipynb` in Jupyter. There is no build or test suite yet.
+## Running the Notebooks
 
 ```powershell
 jupyter notebook protein-generation.ipynb
@@ -38,10 +36,24 @@ jupyter notebook protein-generation.ipynb
 jupyter lab
 ```
 
+For CritiCL scoring, open `Copy_of_CritiCL .ipynb` and use **Kernel → Restart & Run All** on first run so cell 0 installs dependencies into the correct kernel Python.
+
 ## Key Files
 
 | File | Purpose |
 |------|---------|
-| `protein-generation.ipynb` | Main development notebook (Phase 1 sequence generation) |
-| `Ratul.md` | Project spec — phases, constraints, amino acid list |
+| `protein-generation.ipynb` | Phase 1 — sequence generation |
+| `Copy_of_CritiCL .ipynb` | Phase 2 — CritiCL scoring (local-adapted from Google Colab) |
+| `Specs.md` | Project spec — phases, constraints, amino acid list |
 | `Cyclome.full.pdf` | Background literature |
+
+## CritiCL Notebook — Local Adaptations
+
+The original notebook was designed for Google Colab. The following changes were made to run it locally:
+
+- **Cell 0**: pip installs use `{sys.executable} -m pip` so packages install into the active Jupyter kernel's Python (avoids kernel/environment mismatch on Windows with multiple Python versions).
+- **Cell 2**: Removed `from google.colab import files` (Colab-only module).
+- **Cell 25** (`run_uploaded_file`): Replaced `files.upload()` with `input("Enter path to CSV or Excel file: ")` — user types a local file path.
+- **Cell 29** (`save_results`): Removed `files.download()` — file is saved locally and the absolute path is printed.
+
+If `ModuleNotFoundError: No module named 'httpx'` appears, it means the kernel Python is missing a transitive dependency of `esm`. Running cell 0 first resolves it.
